@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3313300742
+  GlobalObjectIdHash: 1300090825
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -210,6 +210,103 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!1 &3764422200902743091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3518225446136584333}
+  - component: {fileID: 9151591098000690978}
+  m_Layer: 0
+  m_Name: Spot Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3518225446136584333
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3764422200902743091}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 487310870453563356}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!108 &9151591098000690978
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3764422200902743091}
+  m_Enabled: 1
+  serializedVersion: 12
+  m_Type: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 50
+  m_Range: 8
+  m_SpotAngle: 70
+  m_InnerSpotAngle: 5
+  m_CookieSize2D: {x: 0.5, y: 0.5}
+  m_Shadows:
+    m_Type: 2
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 1
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!1 &6581184173400280047
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +547,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4000010454786744, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3518225446136584333}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1000013002967384, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
       insertIndex: -1
@@ -470,6 +570,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1000013002967384, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2157132843453415220}
+    - targetCorrespondingSourceObject: {fileID: 1000013002967384, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8444670563636306890}
+    - targetCorrespondingSourceObject: {fileID: 1000013002967384, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 362138992724845935}
   m_SourcePrefab: {fileID: 100100000, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
 --- !u!4 &487310870453563356 stripped
 Transform:
@@ -646,3 +752,32 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TotalTreasure:
     m_InternalValue: 0
+--- !u!114 &8444670563636306890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490609626132464700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f6ac9c00099cb94ca95cd0307619518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::boostSpeed
+  ShowTopMostFoldoutHeaderGroup: 1
+  walkSpeed: 5
+  runSpeed: 10
+--- !u!114 &362138992724845935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490609626132464700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce851ceff1f2ad84cbe973815a4bfc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashlightController
+  ShowTopMostFoldoutHeaderGroup: 1
+  flashlightLight: {fileID: 9151591098000690978}
