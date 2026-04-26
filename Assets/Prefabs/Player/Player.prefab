@@ -177,7 +177,7 @@ Transform:
   m_GameObject: {fileID: 1512772166081771576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.37, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 0
+  GlobalObjectIdHash: 2605849220
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -498,15 +498,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010454786744, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.6619596
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000010454786744, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.12906
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000010454786744, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.03063
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000010454786744, guid: c9c10e442362b304fa498afd8bec3b1c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -726,6 +726,11 @@ MonoBehaviour:
   verticalSpeed: 12
   mouseSensitivity: 0.05
   smoothRotation: 5
+  rayDistance: 10
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 16
+  debugRay: 1
 --- !u!114 &2241935841618572381
 MonoBehaviour:
   m_ObjectHideFlags: 0
