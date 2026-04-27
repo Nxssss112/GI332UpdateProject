@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.Netcode; 
+using Unity.Netcode;
 
 [RequireComponent(typeof(Rigidbody))]
-public class SubmarineController : NetworkBehaviour 
+public class SubmarineController : NetworkBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 15f;
@@ -32,39 +32,30 @@ public class SubmarineController : NetworkBehaviour
         rb.useGravity = false;
         rb.linearDamping = 1.5f;
         rb.angularDamping = 2.5f;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
     }
 
-    private void OnEnable()
-    {
-        
-    }
-
-    
     public override void OnNetworkSpawn()
     {
-        if (IsOwner)
-        {
-            inputActions.Enable();
+        if (!IsOwner) return;
 
-            inputActions.Player.Move.performed += OnMove;
-            inputActions.Player.Move.canceled += OnMove;
+        inputActions.Enable();
 
-            inputActions.Player.Look.performed += OnLook;
-            inputActions.Player.Look.canceled += OnLook;
+        inputActions.Player.Move.performed += OnMove;
+        inputActions.Player.Move.canceled += OnMove;
 
-            inputActions.Player.UpDown.performed += OnUpDown;
-            inputActions.Player.UpDown.canceled += OnUpDown;
+        inputActions.Player.Look.performed += OnLook;
+        inputActions.Player.Look.canceled += OnLook;
 
-            LockCursor();
-        }
+        inputActions.Player.UpDown.performed += OnUpDown;
+        inputActions.Player.UpDown.canceled += OnUpDown;
+
+        LockCursor();
     }
 
     public override void OnNetworkDespawn()
     {
-        if (IsOwner)
-        {
-            inputActions.Disable();
-        }
+        if (IsOwner) inputActions.Disable();
     }
 
     private void OnMove(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
@@ -73,7 +64,6 @@ public class SubmarineController : NetworkBehaviour
 
     private void Update()
     {
-        // 4. ����������Ңͧ ����ͧ�ӹǳ Rotation ���� Input �����ͧ���
         if (!IsOwner) return;
 
         rotationY += lookInput.x * mouseSensitivity;
@@ -91,13 +81,18 @@ public class SubmarineController : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        // 5. ����������Ңͧ ����ͧ����ç (Force) ������Ф�
         if (!IsOwner) return;
 
-        Vector3 moveDir =
-            transform.forward * moveInput.y * moveSpeed +
-            transform.right * moveInput.x * strafeSpeed +
-            transform.up * upDownInput * verticalSpeed;
+        Vector3 moveDir = Vector3.zero;
+
+        // Forward / Backward
+        moveDir += transform.forward * moveInput.y * moveSpeed;
+
+        // Right / Left
+        moveDir += transform.right * moveInput.x * strafeSpeed;
+
+        // Up / Down
+        moveDir += transform.up * upDownInput * verticalSpeed;
 
         rb.AddForce(moveDir, ForceMode.Acceleration);
     }

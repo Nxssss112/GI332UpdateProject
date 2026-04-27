@@ -1,5 +1,5 @@
-using Unity.Netcode;
 using UnityEngine;
+using Unity.Netcode;
 using Unity.Cinemachine;
 
 public class SetupCamera : NetworkBehaviour
@@ -7,7 +7,6 @@ public class SetupCamera : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
-
         StartCoroutine(SetupCam());
     }
 
@@ -24,6 +23,6 @@ public class SetupCamera : NetworkBehaviour
         vcam.Follow = transform;
         vcam.LookAt = transform;
 
-        Debug.Log("Camera set for OWNER: " + OwnerClientId);
+        Debug.Log($"[Camera System] Linked to Owner: {OwnerClientId}");
     }
 }
