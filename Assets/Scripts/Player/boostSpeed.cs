@@ -1,7 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
-using UnityEngine.InputSystem; // เพิ่มตัวนี้เข้ามา
-using System.Collections;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class boostSpeed : NetworkBehaviour
 {
@@ -9,10 +9,19 @@ public class boostSpeed : NetworkBehaviour
     public float walkSpeed = 5f;
     public float runSpeed = 10f;
 
+    [Header("Energy Settings")]
+    public float maxEnergy = 3f;
+    public float regenSpeed = 1f;
+    public float drainSpeed = 1f;
+
+    [Header("UI")]
+    public Image boostBarFill;
+
     private NetworkVariable<float> currentVelocity = new NetworkVariable<float>();
 
+    private float currentEnergy;
     private bool isBoosting = false;
-    private bool isCooldown = false;
+
     private Vector2 moveInput;
 
     public override void OnNetworkSpawn()
@@ -21,25 +30,65 @@ public class boostSpeed : NetworkBehaviour
         {
             currentVelocity.Value = walkSpeed;
         }
+
+        currentEnergy = maxEnergy;
     }
 
     void Update()
     {
         if (!IsOwner) return;
 
-        if (Keyboard.current != null)
-        {
-            float x = (Keyboard.current.dKey.isPressed ? 1 : 0) - (Keyboard.current.aKey.isPressed ? 1 : 0);
-            float y = (Keyboard.current.wKey.isPressed ? 1 : 0) - (Keyboard.current.sKey.isPressed ? 1 : 0);
-            moveInput = new Vector2(x, y);
+        HandleInput();
+        HandleBoost();
+        Move();
+        UpdateUI();
+    }
 
-            if (Keyboard.current.leftShiftKey.wasPressedThisFrame && !isBoosting && !isCooldown)
+    void HandleInput()
+    {
+        if (Keyboard.current == null) return;
+
+        float x = (Keyboard.current.dKey.isPressed ? 1 : 0) - (Keyboard.current.aKey.isPressed ? 1 : 0);
+        float y = (Keyboard.current.wKey.isPressed ? 1 : 0) - (Keyboard.current.sKey.isPressed ? 1 : 0);
+        moveInput = new Vector2(x, y);
+
+        // ?? กดครั้งเดียว = เริ่มพุ่ง (ต้องเต็มก่อน)
+        if (Keyboard.current.leftShiftKey.wasPressedThisFrame && !isBoosting && currentEnergy >= maxEnergy)
+        {
+            isBoosting = true;
+        }
+    }
+
+    void HandleBoost()
+    {
+        if (isBoosting)
+        {
+            currentEnergy -= drainSpeed * Time.deltaTime;
+
+            if (currentEnergy <= 0f)
             {
-                RequestBoostServerRpc();
+                currentEnergy = 0f;
+                isBoosting = false;
+            }
+        }
+        else
+        {
+            if (currentEnergy < maxEnergy)
+            {
+                currentEnergy += regenSpeed * Time.deltaTime;
             }
         }
 
-        Move();
+        currentEnergy = Mathf.Clamp(currentEnergy, 0, maxEnergy);
+
+        // ?? ให้ Server เป็นคนกำหนดความเร็ว
+        UpdateSpeedServerRpc(isBoosting);
+    }
+
+    [ServerRpc]
+    void UpdateSpeedServerRpc(bool boosting)
+    {
+        currentVelocity.Value = boosting ? runSpeed : walkSpeed;
     }
 
     void Move()
@@ -48,27 +97,10 @@ public class boostSpeed : NetworkBehaviour
         transform.position += move.normalized * currentVelocity.Value * Time.deltaTime;
     }
 
-    [ServerRpc]
-    void RequestBoostServerRpc()
+    void UpdateUI()
     {
-        if (!isBoosting && !isCooldown)
-        {
-            StartCoroutine(BoostTimer());
-        }
-    }
+        if (boostBarFill == null) return;
 
-    IEnumerator BoostTimer()
-    {
-        isBoosting = true;
-        currentVelocity.Value = runSpeed;
-
-        yield return new WaitForSeconds(3f);
-
-        currentVelocity.Value = walkSpeed;
-        isBoosting = false;
-        isCooldown = true;
-
-        yield return new WaitForSeconds(5f);
-        isCooldown = false;
+        boostBarFill.fillAmount = currentEnergy / maxEnergy;
     }
 }

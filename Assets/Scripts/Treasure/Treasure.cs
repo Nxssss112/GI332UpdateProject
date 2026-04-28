@@ -5,7 +5,7 @@ using System.Collections;
 public class Treasure : NetworkBehaviour
 {
     [SerializeField] private Renderer render;
-    [SerializeField] private float respawnTime = 20f;
+    [SerializeField] private float respawnTime = 30f;
 
     private int treasureValue = 1;
 
