@@ -11,10 +11,9 @@ public class TreasureSpawner : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        SpawnTreasures(); // ?? เรียกตรงนี้
+        SpawnTreasures();
     }
 
-    // ?? เอาโค้ดที่คุณส่งมาใส่ตรงนี้เลย
     void SpawnTreasures()
     {
         int count = Mathf.Min(spawnAmount, spawnPoints.Length);

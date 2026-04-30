@@ -33,7 +33,8 @@ public class NameSelector : MonoBehaviour
 
     public void Connect()
     {
-        PlayerPrefs.SetString(PlayerNameKey, nameField.text);
+        PlayerPrefs.SetString("PlayerName", nameField.text);
+        PlayerPrefs.Save();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

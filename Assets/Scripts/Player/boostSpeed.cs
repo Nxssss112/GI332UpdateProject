@@ -17,11 +17,14 @@ public class boostSpeed : NetworkBehaviour
     [Header("UI")]
     public Image boostBarFill;
 
+    [Header("Effects")]
+    public ParticleSystem boostParticles;
+
+    private NetworkVariable<bool> isBoostingNet = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
     private NetworkVariable<float> currentVelocity = new NetworkVariable<float>();
 
     private float currentEnergy;
-    private bool isBoosting = false;
-
+    private bool isBoostingLocal = false; 
     private Vector2 moveInput;
 
     public override void OnNetworkSpawn()
@@ -32,6 +35,27 @@ public class boostSpeed : NetworkBehaviour
         }
 
         currentEnergy = maxEnergy;
+
+        isBoostingNet.OnValueChanged += OnBoostStateChanged;
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        isBoostingNet.OnValueChanged -= OnBoostStateChanged;
+    }
+
+    private void OnBoostStateChanged(bool previousValue, bool newValue)
+    {
+        if (boostParticles == null) return;
+
+        if (newValue)
+        {
+            boostParticles.Play();
+        }
+        else
+        {
+            boostParticles.Stop();
+        }
     }
 
     void Update()
@@ -52,23 +76,21 @@ public class boostSpeed : NetworkBehaviour
         float y = (Keyboard.current.wKey.isPressed ? 1 : 0) - (Keyboard.current.sKey.isPressed ? 1 : 0);
         moveInput = new Vector2(x, y);
 
-        // ?? กดครั้งเดียว = เริ่มพุ่ง (ต้องเต็มก่อน)
-        if (Keyboard.current.leftShiftKey.wasPressedThisFrame && !isBoosting && currentEnergy >= maxEnergy)
+        if (Keyboard.current.leftShiftKey.wasPressedThisFrame && !isBoostingLocal && currentEnergy >= maxEnergy)
         {
-            isBoosting = true;
+            isBoostingLocal = true;
         }
     }
 
     void HandleBoost()
     {
-        if (isBoosting)
+        if (isBoostingLocal)
         {
             currentEnergy -= drainSpeed * Time.deltaTime;
-
             if (currentEnergy <= 0f)
             {
                 currentEnergy = 0f;
-                isBoosting = false;
+                isBoostingLocal = false;
             }
         }
         else
@@ -81,13 +103,13 @@ public class boostSpeed : NetworkBehaviour
 
         currentEnergy = Mathf.Clamp(currentEnergy, 0, maxEnergy);
 
-        // ?? ให้ Server เป็นคนกำหนดความเร็ว
-        UpdateSpeedServerRpc(isBoosting);
+        UpdateBoostStatusServerRpc(isBoostingLocal);
     }
 
     [ServerRpc]
-    void UpdateSpeedServerRpc(bool boosting)
+    void UpdateBoostStatusServerRpc(bool boosting)
     {
+        isBoostingNet.Value = boosting;
         currentVelocity.Value = boosting ? runSpeed : walkSpeed;
     }
 
@@ -100,7 +122,6 @@ public class boostSpeed : NetworkBehaviour
     void UpdateUI()
     {
         if (boostBarFill == null) return;
-
         boostBarFill.fillAmount = currentEnergy / maxEnergy;
     }
 }
