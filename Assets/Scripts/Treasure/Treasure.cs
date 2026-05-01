@@ -4,7 +4,12 @@ using System.Collections;
 
 public class Treasure : NetworkBehaviour
 {
+    [Header("Treasure")]
     [SerializeField] private Renderer render;
+
+    [Header("Minimap")]
+    [SerializeField] private Renderer minimapIcon;
+
     [SerializeField] private float respawnTime = 30f;
 
     private int treasureValue = 1;
@@ -17,7 +22,14 @@ public class Treasure : NetworkBehaviour
 
     public int Collect()
     {
-        if (isCollected.Value) return 0;
+        if (GameManager.Instance == null ||
+            !GameManager.Instance.isGameRunning.Value)
+        {
+            return 0;
+        }
+
+        if (isCollected.Value)
+            return 0;
 
         isCollected.Value = true;
 
@@ -32,11 +44,22 @@ public class Treasure : NetworkBehaviour
     private IEnumerator RespawnRoutine()
     {
         yield return new WaitForSeconds(respawnTime);
+
         isCollected.Value = false;
     }
 
     void Update()
     {
-        render.enabled = !isCollected.Value;
+        bool gameStarted =
+            GameManager.Instance != null &&
+            GameManager.Instance.isGameRunning.Value;
+
+        bool visible = gameStarted && !isCollected.Value;
+
+        // ตัวของจริง
+        render.enabled = visible;
+
+        // icon minimap
+        minimapIcon.enabled = visible;
     }
 }
