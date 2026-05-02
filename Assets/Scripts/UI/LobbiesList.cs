@@ -7,6 +7,7 @@ public class LobbiesList : MonoBehaviour
 {
     [SerializeField] private Transform lobbyItemParent;
     [SerializeField] private LobbyItem lobbyItemPrefab;
+    [SerializeField] private AudioClip clickSound; // ช่องสำหรับใส่ไฟล์เสียงใน Inspector
 
     private bool isJoining;
     private bool isRefreshing;
@@ -19,6 +20,9 @@ public class LobbiesList : MonoBehaviour
     public async void RefreshList()
     {
         if (isRefreshing) { return; }
+
+        PlayClickSound(); // เล่นเสียงเมื่อกด Refresh (หรือตอนเปิดหน้าต่างนี้ขึ้นมา)
+
         isRefreshing = true;
         try
         {
@@ -57,6 +61,9 @@ public class LobbiesList : MonoBehaviour
     public async void JoinAsync(Lobby lobby)
     {
         if (isJoining) { return; }
+
+        PlayClickSound(); // เล่นเสียงเมื่อกด Join ห้อง
+
         isJoining = true;
         try
         {
@@ -71,5 +78,14 @@ public class LobbiesList : MonoBehaviour
             Debug.Log(e);
         }
         isJoining = false;
+    }
+
+    // ฟังก์ชันกลางสำหรับสั่งเล่นเสียง
+    private void PlayClickSound()
+    {
+        if (SoundManager.Instance != null && clickSound != null)
+        {
+            SoundManager.Instance.PlaySound(clickSound);
+        }
     }
 }

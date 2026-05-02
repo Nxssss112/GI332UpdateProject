@@ -87,7 +87,6 @@ public class GameManager : NetworkBehaviour
         }
 
         tempList = tempList.OrderByDescending(s => s.Score).ToList();
-
         SyncScoresClientRpc(tempList.ToArray());
     }
 

@@ -213,6 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LobbiesList
   lobbyItemParent: {fileID: 858878310}
   lobbyItemPrefab: {fileID: 5255364713740671168, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
+  clickSound: {fileID: 8300000, guid: 237fdee44136a9243b2e435a494eb580, type: 3}
 --- !u!1 &163501499
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,6 +338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MainMenu
   joinCodeField: {fileID: 1594140108}
   privateToggle: {fileID: 1040276617}
+  clickSound: {fileID: 8300000, guid: 237fdee44136a9243b2e435a494eb580, type: 3}
 --- !u!1 &186686542
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,6 +873,18 @@ MonoBehaviour:
       - m_Target: {fileID: 177317840}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: StartClient
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ButtonGoNext, Assembly-CSharp
+        m_MethodName: GoNext
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3763,6 +3777,34 @@ PrefabInstance:
     - target: {fileID: 3857670122121425672, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
       propertyPath: m_Name
       value: LobbyItem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949441172951299850, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949441172951299850, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949441172951299850, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949441172951299850, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949441172951299850, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: GoNext
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949441172951299850, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ButtonGoNext, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3949441172951299850, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4215480541039245981, guid: add603cf691fb2d4da639eb818b9e3c2, type: 3}
       propertyPath: m_Type
